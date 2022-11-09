@@ -11,10 +11,15 @@ services:
       DATABASE_NAME: 'test'
       DATABASE_USER: 'test'
       DATABASE_PASSWORD: 'test'
+      APP_KEYS: 'liZmPIvLybEafsL8PAkuMA==,xb14b21KS1WsxnCuNKcxVA==,R6JUNVZiUnKIuSyG53WTXQ==,qIS/3d7k8TjcxVQKXKBAVA=='
+      API_TOKEN_SALT: 'j2a7TGwBICXT5THXYdzTiw=='
+      ADMIN_JWT_SECRET: '3nsWP6JG9t096FaVrXCFtg=='
     ports:
       - '1337:1337'
     depends_on:
       - mysql
+    volumes:
+      - './src/api:/app/src/api'
     
   mysql:
     restart: always
@@ -28,3 +33,13 @@ services:
       MYSQL_PASSWORD: 'test'
     volumes:
       - './data/mysql:/var/lib/mysql'
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: 'mysql'
+      MYSQL_ROOT_PASSWORD: 'root'
+      
